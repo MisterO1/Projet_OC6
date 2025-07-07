@@ -1,5 +1,5 @@
 const express = require('express')
-// const auth = require('../middleware/auth')
+const protect = require('../middleware/protectMiddleware')
 // const multer = require('../middleware/multer-config')
 const router = express.Router()
 
@@ -13,14 +13,15 @@ const {
     deleteBook,
 } = require('../controllers/bookControllers')
 
+
 router.get('/', getAllBooks)
 router.get('/:id', getBook)
 router.get('/bestrating', getBestBooks)
 
-router.post('/', addBook)
-router.post('/:id/rating', addRating)
+router.post('/', protect, addBook)
+router.post('/:id/rating', protect, addRating)
 
-router.put('/:id', updateBook)
-router.delete('/:id', deleteBook)
+router.put('/:id', protect, updateBook)
+router.delete('/:id', protect, deleteBook)
 
 module.exports = router
