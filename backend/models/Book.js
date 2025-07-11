@@ -1,35 +1,35 @@
 const mongoose = require('mongoose')
 
 const bookSchema = mongoose.Schema({
+    userId: {
+        type: String,
+        // required: true
+    },
     title: {
         type: String,
-        required: true,
-        unique: true
+        // required: true,
+        // unique: true
     },
     author: {
         type: String,
-        required: true
     },
     imageUrl: {
-        type: String,
-        required: true
+        type: String
     },
     year: {
         type: Number,
-        required: true
     },
-    gender: {
+    genre: {
         type: String,
-        required: true
     },
     ratings: [{
         userId: {
             type: String,
-            unique: true
+            // unique: true
         },
         grade: {
             type: Number,
-            required: true,
+            // required: true,
             min: 0,
             max: 5
         }
@@ -38,7 +38,6 @@ const bookSchema = mongoose.Schema({
         type: Number,
         default: 0
     }
-    
 })
 
 bookSchema.methods.updateAverageRating = function () {
@@ -46,7 +45,7 @@ bookSchema.methods.updateAverageRating = function () {
         this.averageRating = 0
     } else {
         const sum = this.ratings.reduce((total, rating) => total + rating.grade, 0)
-        this.averageRating = Math.round((sum / this.ratings.length)) / 10 // arrondi au 1 décimale
+        this.averageRating = Math.round((sum / this.ratings.length)*10) / 10 // arrondi au 1 décimale
     }
     return this.save()
 }

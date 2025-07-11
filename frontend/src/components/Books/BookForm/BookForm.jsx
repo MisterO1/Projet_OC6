@@ -90,7 +90,7 @@ function BookForm({ book, validate }) {
         <p>Genre</p>
         <input type="text" id="genre" {...register('genre')} />
       </label>
-      <label htmlFor="rate">
+      <label>
         <p>Note</p>
         <div className={styles.Stars}>
           {generateStarsInputs(rating, register, readOnlyStars)}

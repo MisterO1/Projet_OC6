@@ -1,9 +1,9 @@
 // Middleware général de gestion d'erreurs
-const errorHandler = (err, req, res, next) => {
+const errorMiddleware = (err, req, res, next) => {
     try {
         let error = {...err}
-        error.message = err.message
-        console.error(err)
+        // error.message = err.message
+        // console.error(err)
 
         //Mongoose bad ObjectId
         if (err.name === "CastError"){
@@ -24,7 +24,7 @@ const errorHandler = (err, req, res, next) => {
             error.statusCode = 400
         }
 
-        res.status(error.statusCode || 500)
+        res.status(error.statusCode || 500).json({success: false, error: error.message || 'Server Error !'})
         // Differentiate dev and prod
         // res.json({
         //     success: false,
@@ -36,4 +36,4 @@ const errorHandler = (err, req, res, next) => {
     }
 }
 
-module.exports = {  errorHandler }
+export default errorMiddleware

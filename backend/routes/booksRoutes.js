@@ -1,11 +1,11 @@
 const express = require('express')
 const protect = require('../middleware/protectMiddleware')
-// const multer = require('../middleware/multer-config')
+const multer = require('../middleware/multer-config')
 const router = express.Router()
 
 const {
     getAllBooks,
-    getBook,
+    getOneBook,
     getBestBooks,
     addBook,
     addRating,
@@ -15,13 +15,14 @@ const {
 
 
 router.get('/', getAllBooks)
-router.get('/:id', getBook)
 router.get('/bestrating', getBestBooks)
+router.get('/:id', getOneBook)
 
-router.post('/', protect, addBook)
+router.post('/', protect, multer, addBook)
 router.post('/:id/rating', protect, addRating)
 
-router.put('/:id', protect, updateBook)
-router.delete('/:id', protect, deleteBook)
+router.put('/:id', protect, multer, updateBook)
+
+router.delete('/:id', protect, multer, deleteBook)
 
 module.exports = router

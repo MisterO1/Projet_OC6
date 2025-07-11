@@ -1,19 +1,22 @@
 const http = require('http')
 const app = require('./app')
 
+const dotenv = require('dotenv')
+dotenv.config()
+
 // set Port
 const normalizePort = val => {
-  const port = parseInt(val, 10);
-
+  const port = parseInt(val, 10)
   if (isNaN(port)) {
-    return val;
+    return val
   }
   if (port >= 0) {
-    return port;
+    return port
   }
-  return false;
-};
-const port = normalizePort(process.env.PORT || '4000');
+  return false
+}
+
+const port = normalizePort(process.env.PORT || 4000)
 app.set('port', port);
 
 // Error handler Server side
@@ -37,13 +40,15 @@ const errorHandler = error => {
   }
 };
 
+// Create HTTP server
 const server = http.createServer(app);
 
+// Listen for errors and start the server
 server.on('error', errorHandler);
 server.on('listening', () => {
   const address = server.address();
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
-  console.log('Listening on ' + bind);
+  console.log('Server is listening on ' + bind);
 });
 
 server.listen(port);
